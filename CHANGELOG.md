@@ -9,6 +9,10 @@ All notable changes to this project are documented here. This project follows [S
 - RS384/RS512 and ES256/ES384/ES512 signing keys (`Keys\SigningAlgorithm`). `IdTokenResponse` signs and `LogoutRequestHandler` verifies `id_token_hint` with the algorithm the key reports; `JwksFactory` publishes EC keys as `kty: EC` with `crv`/`x`/`y`. A key whose material doesn't match its algorithm now throws instead of being published.
 - `LogoutRequestHandler` passes what the validated `id_token_hint` identified to `LogoutSessionHandlerInterface::terminate()` as request attributes (`ATTRIBUTE_ID_TOKEN_HINT`, `ATTRIBUTE_SUBJECT`, `ATTRIBUTE_CLIENT_ID`), so a session handler can e.g. revoke that user's refresh tokens for that client without a session cookie. The interface is unchanged.
 
+### Fixed
+
+- `LogoutRequestHandler` no longer rejects an expired `id_token_hint` (403). id_tokens typically expire within minutes, so RP-Initiated Logout broke shortly after login; per RP-Initiated Logout 1.0 §2 the OP SHOULD accept them even when `exp` has passed. Signature and issuer are still verified.
+
 ### Changed
 
 - **BREAKING:** Minimum PHP version raised from 8.1 to 8.2. CI matrix updated to 8.2-8.4.
