@@ -119,7 +119,7 @@ $introspectionHandler = new TokenIntrospectionRequestHandler($clientRepository, 
 | `Keys\SigningKeyRepositoryInterface` | Supply one or more RSA or EC signing keys for id_token signing and JWKS, enabling `kid` rotation (RS256/384/512, ES256/384/512 - see Signing algorithms) |
 | `Entities\ClaimsAwareUserEntityInterface` | Your user entity: extends league's `UserEntityInterface`, adds `getClaims(): array` |
 | `Entities\ClaimsAwareClientEntityInterface` | Your client entity: extends league's `ClientEntityInterface`, adds `getPostLogoutRedirectUris(): array` |
-| `Logout\LogoutSessionHandlerInterface` | *(optional)* Hook for your own session teardown on RP-Initiated Logout |
+| `Logout\LogoutSessionHandlerInterface` | *(optional)* Hook for your own session teardown on RP-Initiated Logout; the request it gets carries the validated hint, its `sub` and the client id as `LogoutRequestHandler::ATTRIBUTE_*` attributes |
 
 Plus league/oauth2-server's own repository interfaces (`ClientRepositoryInterface`, `AccessTokenRepositoryInterface`, `RefreshTokenRepositoryInterface`, `AuthCodeRepositoryInterface`, `ScopeRepositoryInterface`).
 

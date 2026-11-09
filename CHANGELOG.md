@@ -7,6 +7,7 @@ All notable changes to this project are documented here. This project follows [S
 ### Added
 
 - RS384/RS512 and ES256/ES384/ES512 signing keys (`Keys\SigningAlgorithm`). `IdTokenResponse` signs and `LogoutRequestHandler` verifies `id_token_hint` with the algorithm the key reports; `JwksFactory` publishes EC keys as `kty: EC` with `crv`/`x`/`y`. A key whose material doesn't match its algorithm now throws instead of being published.
+- `LogoutRequestHandler` passes what the validated `id_token_hint` identified to `LogoutSessionHandlerInterface::terminate()` as request attributes (`ATTRIBUTE_ID_TOKEN_HINT`, `ATTRIBUTE_SUBJECT`, `ATTRIBUTE_CLIENT_ID`), so a session handler can e.g. revoke that user's refresh tokens for that client without a session cookie. The interface is unchanged.
 
 ### Changed
 
